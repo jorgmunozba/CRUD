@@ -48,5 +48,21 @@ class UserController extends Controller
         return back()->with('usuarioEliminado', 'Usuario eliminado');
     }
 
+    //Formulario para editar usuarios
+
+    public function editform($id){
+        $usuario = Usuario::findOrFail($id);
+
+        return view('usuarios.editform', compact('usuario'));
+
+    }
+
+    public function edit(Request $request, $id){
+        $datosUsuario = request()->except((['_token','_method']));
+        Usuario::where('id','=', $id)->update($datosUsuario);
+        
+        return back()->with('usuarioModificado','Usuario modificado');
+    }
+
 
 }
